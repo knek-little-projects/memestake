@@ -14,6 +14,8 @@ import time
 import os
 
 from models import *
+from utils.token.image import get_token_image
+from utils.token.details import get_token_details
 
 load_dotenv()
 bot = telebot.TeleBot(os.getenv('TELEBOT'))
@@ -72,6 +74,13 @@ def login():
         db.session.commit()
 
     return jsonify(User.query.get(user_id).to_dict())
+
+
+@app.route('/token/<chain>/<addr>')
+def token_details(chain, addr):
+    details = get_token_details(chain, addr)
+    details["image"] = get_token_image(chain, addr)
+    return jsonify(details)
 
 
 if __name__ == '__main__':
