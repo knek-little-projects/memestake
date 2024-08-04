@@ -1,4 +1,5 @@
 from web3 import Web3
+from collections import namedtuple
 
 # Sample ERC-20 ABI
 ERC20_ABI = [
@@ -41,6 +42,9 @@ ERC20_ABI = [
 ]
 
 
+TokenDetails = namedtuple("TokenDetails", "name symbol decimals")
+
+
 def get_erc20_web3_details(web3, addr):
 
     addr = Web3.to_checksum_address(addr)
@@ -56,11 +60,11 @@ def get_erc20_web3_details(web3, addr):
     symbol = contract.functions.symbol().call()
     decimals = contract.functions.decimals().call()
     
-    return {
-        "name": name,
-        "symbol": symbol,
-        "decimals": decimals,
-    }
+    return TokenDetails(
+        name=name,
+        symbol=symbol,
+        decimals=decimals,
+    )
 
 
 def get_token_details(chain, addr):

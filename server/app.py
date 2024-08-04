@@ -76,11 +76,35 @@ def login():
     return jsonify(User.query.get(user_id).to_dict())
 
 
+chain_map = {
+    "base": 8453,
+}
+
+
 @app.route('/token/<chain>/<addr>')
 def token_details(chain, addr):
+    if token := Token.query.get(Token.getId(chain, addr)):
+        return jsonify(token.to_dict())
+
     details = get_token_details(chain, addr)
-    details["image"] = get_token_image(chain, addr)
-    return jsonify(details)
+    assert details
+
+    image = get_token_image(chain, addr)
+    assert image
+
+    token = Token(
+        id=Token.getId(chain, addr),
+        chain=chain_map[chain.lower()],
+        address=addr,
+        name=details.name,
+        symbol=details.symbol,
+        decimals=details.decimals,
+        image=image,
+    )
+    db.session.add(token)
+    db.session.commit()
+
+    return jsonify(token.to_dict())
 
 
 if __name__ == '__main__':
