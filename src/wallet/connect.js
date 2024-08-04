@@ -3,16 +3,22 @@ import { createWeb3Modal } from '@web3modal/wagmi/react'
 import { defaultWagmiConfig } from '@web3modal/wagmi/react/config'
 
 import { WagmiProvider } from 'wagmi'
-import { mainnet, bsc } from 'wagmi/chains'
+import * as _chains  from 'wagmi/chains'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const chains = [
-  mainnet,
-  bsc,
+  _chains.base,
 ]
+
+export const BASE_CHAIN_ID = 8453
+export const BASE_MEMESTAKE_TOKEN_ADDRESS = "0x4ed4e862860bed51a9570b96d89af5e1b0efefed"
 
 export function getChainById(id) {
   return [...chains].find(x => x.id === id)
+}
+
+export function getChainByName(name) {
+  return [...chains].find(x => x.name.toLowerCase() === name.toLowerCase())
 }
 
 // 0. Setup queryClient

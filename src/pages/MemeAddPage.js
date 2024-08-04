@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react"
+import { useNavigate, useParams } from "react-router-dom"
+import { useAccount } from "wagmi"
+import { useWeb3Modal } from "@web3modal/wagmi/react"
 
 import Button from "../components/Button"
 import Input from "../components/Input"
@@ -8,9 +11,9 @@ import * as api from "../api"
 import Loader from "../components/Loader"
 import EthAddressInput from "../components/EthAddressInput"
 import isValidAddress from "../utils/isValidAddress"
-import { useNavigate, useParams } from "react-router-dom"
 import { ConnectButton } from "../components/ConnectButton"
-
+import useBalance from "../hooks/useBalance"
+import { BASE_CHAIN_ID, BASE_MEMESTAKE_TOKEN_ADDRESS } from "../wallet/connect"
 
 function TokenDetails({
   chain,
@@ -38,20 +41,47 @@ function StakeAndPublishForm({
   ...details
 }) {
   const [stakeAndPublish, setStakeAndPublish] = useState(false)
+  const { address: walletAddress } = useAccount()
+
+  const balanceLoader = useBalance({
+    walletAddress,
+    tokenAddress: BASE_MEMESTAKE_TOKEN_ADDRESS,
+    chainId: BASE_CHAIN_ID,
+  })
+  const { balance, decimals } = balanceLoader
+
+  // const minAmount = ((10n ** 18n) * 100n)
+  const minAmount = 0n
+
   return (
     <div>
       <TokenDetails {...details} />
-      {
-        stakeAndPublish
-        &&
-        <>
-          You have ?? $memestakes
-        </>
-        ||
-        <Button onClick={() => setStakeAndPublish(true)}>
-          Stake and publish
-        </Button>
-      }
+      <Loader {...balanceLoader}>
+        <div>You have {"" + balance} $MEMESTAKE</div>
+        {
+          balance < minAmount
+          &&
+          <div>
+            <div>
+              You need to buy extra {"" + (minAmount - balance)} $MEMESTAKEs to publish {details.symbol}
+            </div>
+            <div>
+              <Button>
+                BUY
+              </Button>
+            </div>
+          </div>
+          ||
+          <div>
+            <Button>
+              Step 1. Stake {"" + minAmount} $MEMESTAKEs
+            </Button>
+            <Button>
+              Step 2. PUBLISH {details.symbol}
+            </Button>
+          </div>
+        }
+      </Loader>
     </div>
   )
 }
@@ -139,9 +169,17 @@ export function MemeCheckForm() {
 }
 
 export default function () {
+
+  const { isConnected } = useAccount()
+
   return (
     <div>
       <ConnectButton />
+      {
+        isConnected
+        &&
+        <MemeCheckForm />
+      }
     </div>
   )
 }
