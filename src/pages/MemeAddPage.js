@@ -56,7 +56,7 @@ function StakeAndPublishForm({
 }
 
 
-export default function () {
+export function MemeCheckForm() {
   const navigate = useNavigate()
   const { addr: checkTokenAddress } = useParams()
 
@@ -135,4 +135,8 @@ export default function () {
       }
     </div>
   )
+}
+
+export default function () {
+  return <></>
 }
