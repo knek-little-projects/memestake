@@ -3,7 +3,11 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
+
+// <monkey patch must run before importing wallet connect!>
+import "./telegram-w3m-monkey-patch"
 import { Web3ModalProvider } from "./wallet/connect"
+// </monkey patch must run before importing wallet connect!>
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(

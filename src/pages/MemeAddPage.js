@@ -9,6 +9,7 @@ import Loader from "../components/Loader"
 import EthAddressInput from "../components/EthAddressInput"
 import isValidAddress from "../utils/isValidAddress"
 import { useNavigate, useParams } from "react-router-dom"
+import { ConnectButton } from "../components/ConnectButton"
 
 
 function TokenDetails({
@@ -138,5 +139,9 @@ export function MemeCheckForm() {
 }
 
 export default function () {
-  return <></>
+  return (
+    <div>
+      <ConnectButton />
+    </div>
+  )
 }
