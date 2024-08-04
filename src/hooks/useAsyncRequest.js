@@ -23,6 +23,11 @@ export default function useAsyncRequest(asyncFunction, dependencies = []) {
   }, dependencies)
 
   useEffect(() => {
+    if (!asyncFunction) {
+      return
+    }
+    setLoading(true)
+    setError(null)
     execute()
   }, [execute])
 

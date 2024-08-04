@@ -72,3 +72,7 @@ export async function login() {
   window.localStorage.setItem('X-USER-ID', data.id)
   return new UserModel(await post("/login", data))
 }
+
+export async function getTokenDetails(chain, addr) {
+  return await get(`/token/${chain}/${addr}`)
+}
