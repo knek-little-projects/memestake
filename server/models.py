@@ -63,4 +63,19 @@ class Token(db.Model):
             "image": self.image,
             "listed": self.listed,
         }
+
+
+class Locking(db.Model):
+    __tablename__ = 'lockings'
+
+    id = db.Column(db.String, primary_key=True)
+    type = db.Column(db.Integer, nullable=False)
+    contract_chain = db.Column(db.Integer, nullable=False)
+    contract_address = db.Column(db.String, nullable=False)
+    block_number = db.Column(db.Integer, nullable=False)
     
+    wallet_address = db.Column(db.String, nullable=False)
+    token_address = db.Column(db.String, nullable=False)
+    change = db.Column(db.String, nullable=False)
+    
+    created_at = db.Column(db.BigInteger, nullable=False, default=timestamp)

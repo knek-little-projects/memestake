@@ -48,9 +48,15 @@ def update_tvls():
         pass
 
 
+def watch_events():
+    with app.app_context():
+        pass
+
+
 def start_scheduler():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(func=update_tvls, trigger="interval", seconds=1) # minutes=1)
+    # scheduler.add_job(func=update_tvls, trigger="interval", seconds=1) # minutes=1)
+    # scheduler.add_job(func=watch_events, trigger="interval", seconds=10) # minutes=1)
     scheduler.start()
     # Shut down the scheduler when exiting the app
     atexit.register(lambda: scheduler.shutdown())
@@ -95,6 +101,11 @@ def login():
 chain_map = {
     "base": 8453,
 }
+
+@app.route('/events')
+def test_events():
+    
+    pass
 
 
 @app.route('/token/<chain>/<addr>')
