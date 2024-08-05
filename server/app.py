@@ -6,8 +6,11 @@ from flask_cors import CORS, cross_origin
 from flask import Response
 from flask_apscheduler import APScheduler
 
+from apscheduler.schedulers.background import BackgroundScheduler
 from dotenv import load_dotenv
+
 import telebot
+import atexit
 
 import json
 import time
@@ -38,6 +41,19 @@ app.config['DISABLE_SCHEDULER'] = os.getenv('DISABLE_SCHEDULER', 'False').lower(
 
 db.init_app(app)
 migrate = Migrate(app, db)
+
+
+def update_tvls():
+    with app.app_context():
+        pass
+
+
+def start_scheduler():
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(func=update_tvls, trigger="interval", seconds=1) # minutes=1)
+    scheduler.start()
+    # Shut down the scheduler when exiting the app
+    atexit.register(lambda: scheduler.shutdown())
 
 
 def get_user(request):
@@ -108,4 +124,5 @@ def token_details(chain, addr):
 
 
 if __name__ == '__main__':
+    start_scheduler()
     app.run(host="0.0.0.0", port=int(os.getenv('PORT', 8000)), debug=os.getenv('DEBUG', 'True').lower() in ['true', '1', 't'])
