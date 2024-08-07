@@ -1,3 +1,13 @@
+# MEMESTAKE
+
+## Deployments
+
+| Chain | Contract | Address |
+|-|-|-|
+| Base | Locker | 0xd66196be412dbb521c65b18170c99d9ebcf2ab46 |
+| Base | Token | 0x892d8E4E3e9481455ad355A6BbF5e812A6f0C7e1 |
+
+
 ## Foundry
 
 **Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
