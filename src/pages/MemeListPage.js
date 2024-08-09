@@ -6,7 +6,7 @@ import useAsyncRequest from "../hooks/useAsyncRequest"
 import Loader from "../components/Loader"
 import * as api from "../api"
 import { BASE_CHAIN_ID } from "../wallet/connect"
-import MemeCard from "../components/MemeCard"
+import { MemeList, MemeCard } from "../components/MemeCard"
 import { floatReward } from '../components/Reward'
 import { extractLeftTop } from "../utils/extractLeftTop"
 
@@ -54,41 +54,43 @@ export default function () {
           }}>
             <ConnectButton />
           </div>
-          <div className="meme-cards">
+          <MemeList>
             {
               memes.data && memes.data.map(
                 token => (
                   <MemeCard
+                    showUp={true}
+                    number={parseInt(Math.random() * 1000)}
                     key={token.id}
                     title={token.name}
                     image={token.image}
-                    // volume={Math.random() * 1000000000}
                     volume={1}
                     onUpClick={handleUpClick}
                   />
                 )
               )
             }
-          </div>
+          </MemeList>
           <h1 className="select-page-title">
             TOP MEMES
           </h1>
-          <div className="meme-cards">
+          <MemeList>
             {
               memes.data && memes.data.map(
                 token => (
                   <MemeCard
+                    showBuy={true}
+                    number={100}
                     key={token.id}
                     title={token.name}
                     image={token.image}
-                    // volume={Math.random() * 1000000000}
                     volume={1}
                     onUpClick={handleUpClick}
                   />
                 )
               )
             }
-          </div>
+          </MemeList>
         </div>
       </Loader>
 
