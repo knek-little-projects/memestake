@@ -1,123 +1,132 @@
 body {
-    background: #212121;
-  
-    font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, Roboto, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-    font-style: normal;
-    font-size: 20px;
-    letter-spacing: -0.45px;
-  
-    color: #FFFFFF;
-  }
-  
-  h1,
-  .bolder {
-    font-weight: 590;
-  }
-  
-  .smaller {
-    font-size: 12px;
-  }
-  
+  background: #212121;
+
+  font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, Roboto, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-style: normal;
+  font-size: 20px;
+  letter-spacing: -0.45px;
+
+  color: #FFFFFF;
+}
+
+h1,
+.bolder {
+  font-weight: 590;
+}
+
+.smaller {
+  font-size: 12px;
+}
+
+button {
+  font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, Roboto, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-style: normal;
+  font-weight: 590;
+  font-size: 14px;
+  color: #FFFFFF;
+  box-sizing: border-box;
+  cursor: pointer;
+  background: transparent;
+
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+.app-loading {
+  opacity: 0.25;
+}
+
+button.primary {
+  /* Button (iOS) */
+
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 12px;
+
+  width: 166px;
+  min-width: 50px;
+  height: 52px;
+
+  background: #2990FF;
+  border-radius: 12px;
+
+  /* Label */
+
+  font-style: normal;
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 22px;
+
+  align-items: center;
+  text-align: center;
+  letter-spacing: -0.4px;
+
+  color: #FFFFFF;
+}
+
+button.secondary {
+  /* Button (iOS) */
+
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 12px;
+
+  width: 124px;
+  min-width: 50px;
+  height: 42px;
+
+  background: #2990FF;
+  border-radius: 12px;
+
+  /* Label */
+
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 22px;
+
+  align-items: center;
+  text-align: center;
+  letter-spacing: -0.4px;
+
+  color: #FFFFFF;
+}
+
+button.primary:disabled {
+  background: rgba(56, 56, 56, 0.85);
+  cursor: not-allowed;
+  color: #ADADAD;
+}
+
+button.secondary:disabled {
+  background: rgba(56, 56, 56, 0.85);
+  cursor: not-allowed;
+  color: #ADADAD;
+}
+
+#ton-connect-button {
+  margin-top: 10px;
+  width: 100%;
+
   button {
-    font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, Roboto, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-    font-style: normal;
-    font-weight: 590;
-    font-size: 14px;
-    color: #FFFFFF;
-    box-sizing: border-box;
-    cursor: pointer;
-  }
-  
-  .app-loading {
-    opacity: 0.25;
-  }
-  
-  button.primary {
-    /* Button (iOS) */
-  
-    /* Auto layout */
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 15px 12px;
-  
-    width: 166px;
-    min-width: 50px;
-    height: 52px;
-  
-    background: #2990FF;
+    padding: 8px 12px;
+    margin: 0 14px;
+    width: calc(100% - 28px);
+    min-width: 34px;
+    min-height: 36px;
+    border: 1px solid #5AE536;
     border-radius: 12px;
-  
-    /* Label */
-  
-    font-style: normal;
-    font-weight: 700;
-    font-size: 17px;
-    line-height: 22px;
-  
-    align-items: center;
-    text-align: center;
-    letter-spacing: -0.4px;
-  
-    color: #FFFFFF;
+    background-color: transparent;
   }
-  
-  button.secondary {
-    /* Button (iOS) */
-  
-    /* Auto layout */
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 15px 12px;
-  
-    width: 124px;
-    min-width: 50px;
-    height: 42px;
-  
-    background: #2990FF;
-    border-radius: 12px;
-  
-    /* Label */
-  
-    font-style: normal;
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 22px;
-  
-    align-items: center;
-    text-align: center;
-    letter-spacing: -0.4px;
-  
-    color: #FFFFFF;
-  }
-  
-  button.primary:disabled {
-    background: rgba(56, 56, 56, 0.85);
-    cursor: not-allowed;
-    color: #ADADAD;
-  }
-  
-  button.secondary:disabled {
-    background: rgba(56, 56, 56, 0.85);
-    cursor: not-allowed;
-    color: #ADADAD;
-  }
-  
-  #ton-connect-button {
-    margin-top: 10px;
-    width: 100%;
-  
-    button {
-      padding: 8px 12px;
-      margin: 0 14px;
-      width: calc(100% - 28px);
-      min-width: 34px;
-      min-height: 36px;
-      border: 1px solid #5AE536;
-      border-radius: 12px;
-      background-color: transparent;
-    }
-  }
+}

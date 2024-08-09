@@ -14,6 +14,10 @@ export default function () {
 
   const memes = useAsyncRequest(() => api.getTokens({ chainId: BASE_CHAIN_ID }))
 
+  function handleUpClick() {
+    
+  }
+
   return (
     <div>
       <Loader {...memes}>
@@ -36,9 +40,8 @@ export default function () {
                 token => (
                   <MemeCard
                     title={token.name}
-                    color={"black"}
-                    color2={"rgba(100, 100, 100, 0.4)"}
                     image={token.image}
+                    onUpClick={handleUpClick}
                   />
                 )
               )

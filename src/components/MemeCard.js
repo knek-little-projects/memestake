@@ -1,4 +1,5 @@
 import "./MemeCard.scss"
+import UpButton from "./UpButton"
 
 export default function ({
   title,
@@ -6,10 +7,9 @@ export default function ({
   color2,
   image,
   onClick,
+  onUpClick,
   children,
 }) {
-  color2 = "transparent"
-
   return (
     <div className="meme-card" onClick={onClick}>
       <div className="meme-card-ava">
@@ -24,7 +24,7 @@ export default function ({
         </div>
       </div>
       <div>
-        PUMP
+        <UpButton onClick={onUpClick} />
       </div>
     </div>
   )
