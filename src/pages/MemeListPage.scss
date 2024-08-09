@@ -1,10 +1,40 @@
 @import "../const.scss";
 
 .select-page-content {
-  h1.select-page-title {
-    padding: 10px;
-    margin-bottom: 10px;
-    text-align: center;
+
+  .top-ten {
+    h1 {
+      margin: 0;
+      text-align: center;
+      padding: 0;
+      margin-top: 30px;
+    }
+
+    h2 {
+      margin: 0;
+      text-align: center;
+      padding: 0;
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: normal;
+      margin-bottom: 10px;
+    }
+  }
+
+  .your-memes {
+    h1 {
+      padding: 10px;
+      margin-bottom: 0px;
+      text-align: center;
+    }
+
+    .connect-buttons {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      flex-direction: row;
+      justify-content: space-evenly;
+      margin-bottom: 20px;
+    }
   }
 
   .wallet-buttons {

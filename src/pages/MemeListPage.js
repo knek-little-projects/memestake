@@ -11,6 +11,7 @@ import { floatReward } from '../components/Reward'
 import { extractLeftTop } from "../utils/extractLeftTop"
 
 import "./MemeListPage.scss"
+import url from "../url"
 
 export default function () {
 
@@ -42,17 +43,13 @@ export default function () {
     <div>
       <Loader {...memes}>
         <div className="select-page-content">
-          <h1 className="select-page-title">
-            YOUR MEMES
-          </h1>
-          <div style={{
-            display: "flex",
-            alignItems: "center",
-            textAlign: "center",
-            flexDirection: "row",
-            justifyContent: "space-evenly",
-          }}>
-            <ConnectButton />
+          <div className="your-memes">
+            <h1>
+              YOUR MEMES
+            </h1>
+            <div className="connect-buttons">
+              <ConnectButton />
+            </div>
           </div>
           <MemeList>
             {
@@ -71,9 +68,16 @@ export default function () {
               )
             }
           </MemeList>
-          <h1 className="select-page-title">
-            TOP MEMES
-          </h1>
+          <div className="top-ten">
+            <h1>
+              <img src={url("ui/leaderboard.png")} style={{ padding: '10px' }} />
+              TOP TEN
+              <img src={url("ui/leaderboard.png")} style={{ padding: '10px' }} />
+            </h1>
+            <h2>
+              TO RECEIVE AIRDROP
+            </h2>
+          </div>
           <MemeList>
             {
               memes.data && memes.data.map(
@@ -91,7 +95,33 @@ export default function () {
               )
             }
           </MemeList>
+          <div className="top-ten">
+            <h1>
+              &#9733;
+              TOP 100
+              &#9733;
+            </h1>
+            <h2>
+            </h2>
+          </div>
         </div>
+          <MemeList>
+            {
+              memes.data && memes.data.map(
+                token => (
+                  <MemeCard
+                    showBuy={true}
+                    number={100}
+                    key={token.id}
+                    title={token.name}
+                    image={token.image}
+                    volume={1}
+                    onUpClick={handleUpClick}
+                  />
+                )
+              )
+            }
+          </MemeList>
       </Loader>
 
     </div>
