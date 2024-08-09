@@ -74,4 +74,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 ```
 https://basescan.org/token/0x4ed4e862860bed51a9570b96d89af5e1b0efefed
 https://basescan.org/token/0xac1bd2486aaf3b5c0fc3fd868558b082a531b2b4
+https://basescan.org/token/0x26f1bb40ea88b46ceb21557dc0ffac7b7c0ad40f
+https://basescan.org/token/0xb1a03eda10342529bbf8eb700a06c60441fef25d
 ```
