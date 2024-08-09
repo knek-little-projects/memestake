@@ -11,8 +11,9 @@ export default function App() {
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
-        <Route path="/" element={<Navigate to="/add" />} />
+        <Route path="/" element={<Navigate to="/add/" />} />
         <Route path="/add" element={<Navigate to="/add/" />} />
+        <Route path="/add/" element={<MemeAddPage />} />
         <Route path="/add/:addr" element={<MemeAddPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

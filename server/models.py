@@ -40,7 +40,7 @@ class Token(db.Model):
     __tablename__ = 'tokens'
 
     id = db.Column(db.String, primary_key=True)
-    chain = db.Column(db.Integer, nullable=False)
+    chain_id = db.Column(db.Integer, nullable=False)
     address = db.Column(db.String, nullable=False)
     name = db.Column(db.String, nullable=False)
     symbol = db.Column(db.String, nullable=False)
@@ -55,7 +55,8 @@ class Token(db.Model):
 
     def to_dict(self):
         return {
-            "chain": self.chain,
+            "id": self.id,
+            "chainId": self.chain_id,
             "address": self.address,
             "name": self.name,
             "symbol": self.symbol,
@@ -65,17 +66,17 @@ class Token(db.Model):
         }
 
 
-class Locking(db.Model):
-    __tablename__ = 'lockings'
+# class Locking(db.Model):
+#     __tablename__ = 'lockings'
 
-    id = db.Column(db.String, primary_key=True)
-    type = db.Column(db.Integer, nullable=False)
-    contract_chain = db.Column(db.Integer, nullable=False)
-    contract_address = db.Column(db.String, nullable=False)
-    block_number = db.Column(db.Integer, nullable=False)
+#     id = db.Column(db.String, primary_key=True)
+#     type = db.Column(db.Integer, nullable=False)
+#     contract_chain = db.Column(db.Integer, nullable=False)
+#     contract_address = db.Column(db.String, nullable=False)
+#     block_number = db.Column(db.Integer, nullable=False)
     
-    wallet_address = db.Column(db.String, nullable=False)
-    token_address = db.Column(db.String, nullable=False)
-    change = db.Column(db.String, nullable=False)
+#     wallet_address = db.Column(db.String, nullable=False)
+#     token_address = db.Column(db.String, nullable=False)
+#     change = db.Column(db.String, nullable=False)
     
-    created_at = db.Column(db.BigInteger, nullable=False, default=timestamp)
+#     created_at = db.Column(db.BigInteger, nullable=False, default=timestamp)

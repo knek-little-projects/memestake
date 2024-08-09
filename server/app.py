@@ -98,40 +98,48 @@ def login():
     return jsonify(User.query.get(user_id).to_dict())
 
 
-chain_map = {
-    "base": 8453,
-}
-
 @app.route('/events')
 def test_events():
-    
     pass
 
 
-@app.route('/token/<chain>/<addr>')
-def token_details(chain, addr):
-    if token := Token.query.get(Token.getId(chain, addr)):
+@app.route('/token/<int:chain_id>/<addr>', methods=["GET", "POST"])
+def token(chain_id, addr):
+
+    if request.method == "GET":
+
+        if token := Token.query.get(Token.getId(chain_id, addr)):
+            return jsonify(token.to_dict())
+
+        details = get_token_details(chain_id, addr)
+        assert details, "Token details not found"
+
+        image = get_token_image(chain_id, addr)
+        assert image, "Token image not found"
+
+        token = Token(
+            id=Token.getId(chain_id, addr),
+            chain_id=chain_id,
+            address=addr,
+            name=details.name,
+            symbol=details.symbol,
+            decimals=details.decimals,
+            image=image,
+        )
+        db.session.add(token)
+        db.session.commit()
+
         return jsonify(token.to_dict())
+        
+    if request.method == "POST":
 
-    details = get_token_details(chain, addr)
-    assert details
+        token = Token.query.get(Token.getId(chain_id, addr))
+        assert token, f"Token chain_id={chain_id} addr={addr} not found"
 
-    image = get_token_image(chain, addr)
-    assert image
+        token.listed = True
+        db.session.commit()
 
-    token = Token(
-        id=Token.getId(chain, addr),
-        chain=chain_map[chain.lower()],
-        address=addr,
-        name=details.name,
-        symbol=details.symbol,
-        decimals=details.decimals,
-        image=image,
-    )
-    db.session.add(token)
-    db.session.commit()
-
-    return jsonify(token.to_dict())
+        return jsonify({})
 
 
 if __name__ == '__main__':

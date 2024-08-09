@@ -1,10 +1,13 @@
 import requests
+from .chains import *
 
 
-def get_token_image(chain, addr):
+def get_token_image(chain_id: int, addr):
+    assert isinstance(chain_id, int)
+
     def get_token_image_by_address(address):
         address = address.lower()
-        url = f"https://api.coingecko.com/api/v3/coins/{chain}/contract/{address}"
+        url = f"https://api.coingecko.com/api/v3/coins/{chain_id}/contract/{address}"
         
         response = requests.get(url)
         if response.status_code == 200:
@@ -15,6 +18,8 @@ def get_token_image(chain, addr):
 
     def get_trustwallet_token_image(address):
         address = address.lower()
+        chain = "base"
+        
         url = f"https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/{chain}/assets/{address}/logo.png"
         
         response = requests.get(url)
@@ -47,6 +52,7 @@ def get_token_image(chain, addr):
         if 'data' in data and 'token' in data['data']:
             token = data['data']['token']
             return f"https://uniswap.org/images/tokens/{token['id']}.png"
+
         return None
 
     # Try CoinGecko API

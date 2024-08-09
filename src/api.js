@@ -1,4 +1,4 @@
-import { UserModel } from "./data"
+import { TokenModel, UserModel } from "./data"
 
 const API_BASE_URL = process.env.REACT_APP_BACK_URL || "http://localhost:8000"
 
@@ -73,6 +73,11 @@ export async function login() {
   return new UserModel(await post("/login", data))
 }
 
-export async function getTokenDetails(chain, addr) {
-  return await get(`/token/${chain}/${addr}`)
+export async function getTokenDetails(chainId, addr) {
+  return new TokenModel(await get(`/token/${chainId}/${addr}`))
 }
+
+export async function publish({ chainId, address }) {
+  return await post(`/token/${chainId}/${address}`)
+}
+

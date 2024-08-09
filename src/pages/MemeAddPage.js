@@ -42,6 +42,7 @@ function StakeAndPublishForm({
 }) {
   const [stakeAndPublish, setStakeAndPublish] = useState(false)
   const { address: walletAddress } = useAccount()
+  const [isPublished, setPublished] = useState(details.listed)
 
   const balanceLoader = useBalance({
     walletAddress,
@@ -52,6 +53,11 @@ function StakeAndPublishForm({
 
   // const minAmount = ((10n ** 18n) * 100n)
   const minAmount = 0n
+
+  async function handlePublish() {
+    await api.publish(details)
+    setPublished(true)
+  }
 
   return (
     <div>
@@ -72,14 +78,23 @@ function StakeAndPublishForm({
             </div>
           </div>
           ||
-          <div>
-            <Button>
-              Step 1. Stake {"" + minAmount} $MEMESTAKEs
-            </Button>
-            <Button>
-              Step 2. PUBLISH {details.symbol}
-            </Button>
-          </div>
+          (
+            isPublished
+            &&
+            <div>
+              Published!
+            </div>
+            ||
+            <div>
+              <Button>
+                Step 1. Stake {"" + minAmount} $MEMESTAKEs
+              </Button>
+              <Button onClick={handlePublish}>
+                Step 2. PUBLISH {details.symbol}
+              </Button>
+            </div>
+          )
+
         }
       </Loader>
     </div>
@@ -91,10 +106,10 @@ export function MemeCheckForm() {
   const navigate = useNavigate()
   const { addr: checkTokenAddress } = useParams()
 
-  const [text, setText] = useState("")
+  const [text, setText] = useState(checkTokenAddress)
 
   useEffect(() => {
-    if (checkTokenAddress !== text) {
+    if (checkTokenAddress && text && checkTokenAddress !== text) {
       setText(checkTokenAddress)
     }
   }, [checkTokenAddress])
@@ -113,11 +128,9 @@ export function MemeCheckForm() {
     }
 
     try {
-      const details = await api.getTokenDetails("base", checkTokenAddress)
-      details.address = checkTokenAddress
-      details.chain = "base"
-      return details
-    } catch {
+      return await api.getTokenDetails(BASE_CHAIN_ID, checkTokenAddress)
+    } catch(e) {
+      console.error(e)
       return null
     }
 

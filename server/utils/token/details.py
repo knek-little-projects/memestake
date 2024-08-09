@@ -1,45 +1,8 @@
 from web3 import Web3
 from collections import namedtuple
-
+from .chains import *
+from .erc20 import *
 # Sample ERC-20 ABI
-ERC20_ABI = [
-    {
-        "constant": True,
-        "inputs": [],
-        "name": "name",
-        "outputs": [{"name": "", "type": "string"}],
-        "payable": False,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": True,
-        "inputs": [],
-        "name": "symbol",
-        "outputs": [{"name": "", "type": "string"}],
-        "payable": False,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": True,
-        "inputs": [],
-        "name": "decimals",
-        "outputs": [{"name": "", "type": "uint8"}],
-        "payable": False,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": True,
-        "inputs": [],
-        "name": "totalSupply",
-        "outputs": [{"name": "", "type": "uint256"}],
-        "payable": False,
-        "stateMutability": "view",
-        "type": "function"
-    }
-]
 
 
 TokenDetails = namedtuple("TokenDetails", "name symbol decimals")
@@ -67,15 +30,17 @@ def get_erc20_web3_details(web3, addr):
     )
 
 
-def get_token_details(chain, addr):
+def get_token_details(chain_id, addr):
     # examples:
     # degen base https://basescan.org/token/0x4ed4e862860bed51a9570b96d89af5e1b0efefed
     # pepe mainnet https://etherscan.io/token/0x6982508145454ce325ddbe47a25d4ec3d2311933
 
-    if chain == "base":
+    assert isinstance(chain_id, int), "int chain_id expected"
+
+    if chain_id == BASE_CHAIN_ID:
         web3 = Web3(Web3.HTTPProvider("https://mainnet.base.org"))
     else:
-        raise Exception(f"Fetching from '{chain}' is not implemented yet")
+        raise Exception(f"Fetching from chain id={chain_id} is not implemented yet")
 
     return get_erc20_web3_details(web3, addr)
 
