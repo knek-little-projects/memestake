@@ -131,4 +131,17 @@
       max-height: 90px;
     }
   }
+
+  .volume {
+    min-width: 100px;
+    text-align: right;
+    .title {
+      font-size: 16px;
+      font-style: italic;
+      color: rgba(100, 100, 100, 0.9);
+    }
+    .value {
+      font-size: 35px;
+    }
+  }
 }

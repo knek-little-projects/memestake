@@ -21,10 +21,10 @@ function BottomNavButton({ image, text, path }) {
   )
 }
 
-export default function ({}) {
+export default function ({
+  height
+}) {
   
-  const height = 60;
-
   const style = {
     height: height + 'px',
     maxHeight: height + 'px',

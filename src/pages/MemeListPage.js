@@ -19,16 +19,22 @@ export default function () {
   function handleUpClick(e) {
     const rect = e.target.getBoundingClientRect()
     let { left, top } = extractLeftTop(e)
-    left += (Math.random() - 1) * rect.width
-    top += (Math.random() - 1) * rect.height
 
-    floatReward({ 
-      left, 
-      top, 
-      timeout: 1000, 
-      container: document.querySelector("body"), 
-      value: "+1", 
-      className: "reward" 
+    let scrollOffset = 0
+    if (document.scrollingElement) {
+      scrollOffset = document.scrollingElement.scrollTop
+    }
+
+    left += (Math.random() - 1) * rect.width
+    top += (Math.random() - 1) * rect.height + scrollOffset
+
+    floatReward({
+      left,
+      top,
+      timeout: 1000,
+      container: document.querySelector("body"),
+      value: "+1",
+      className: "reward"
     })
   }
 
@@ -37,7 +43,7 @@ export default function () {
       <Loader {...memes}>
         <div className="select-page-content">
           <h1 className="select-page-title">
-            TOP MEMES
+            YOUR MEMES
           </h1>
           <div style={{
             display: "flex",
@@ -53,8 +59,30 @@ export default function () {
               memes.data && memes.data.map(
                 token => (
                   <MemeCard
+                    key={token.id}
                     title={token.name}
                     image={token.image}
+                    // volume={Math.random() * 1000000000}
+                    volume={1}
+                    onUpClick={handleUpClick}
+                  />
+                )
+              )
+            }
+          </div>
+          <h1 className="select-page-title">
+            TOP MEMES
+          </h1>
+          <div className="meme-cards">
+            {
+              memes.data && memes.data.map(
+                token => (
+                  <MemeCard
+                    key={token.id}
+                    title={token.name}
+                    image={token.image}
+                    // volume={Math.random() * 1000000000}
+                    volume={1}
                     onUpClick={handleUpClick}
                   />
                 )
