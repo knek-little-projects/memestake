@@ -6,16 +6,30 @@ import useAsyncRequest from "../hooks/useAsyncRequest"
 import Loader from "../components/Loader"
 import * as api from "../api"
 import { BASE_CHAIN_ID } from "../wallet/connect"
+import MemeCard from "../components/MemeCard"
+import { floatReward } from '../components/Reward'
+import { extractLeftTop } from "../utils/extractLeftTop"
 
 import "./MemeListPage.scss"
-import MemeCard from "../components/MemeCard"
 
 export default function () {
 
   const memes = useAsyncRequest(() => api.getTokens({ chainId: BASE_CHAIN_ID }))
 
-  function handleUpClick() {
-    
+  function handleUpClick(e) {
+    const rect = e.target.getBoundingClientRect()
+    let { left, top } = extractLeftTop(e)
+    left += (Math.random() - 1) * rect.width
+    top += (Math.random() - 1) * rect.height
+
+    floatReward({ 
+      left, 
+      top, 
+      timeout: 1000, 
+      container: document.querySelector("body"), 
+      value: "+1", 
+      className: "reward" 
+    })
   }
 
   return (
