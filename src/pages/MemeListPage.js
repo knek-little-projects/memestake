@@ -9,6 +9,8 @@ import { BASE_CHAIN_ID } from "../wallet/connect"
 import { MemeList, MemeCard } from "../components/MemeCard"
 import { floatReward } from '../components/Reward'
 import { extractLeftTop } from "../utils/extractLeftTop"
+import openLink from "../utils/openLink"
+import getBuyLink from "../utils/getBuyLink"
 
 import "./MemeListPage.scss"
 import url from "../url"
@@ -37,6 +39,10 @@ export default function () {
       value: "+1",
       className: "reward"
     })
+  }
+
+  function handleBuy(token) {
+    openLink(getBuyLink({ sellTokenAddress: "ETH", buyTokenAddress: token.address, chainId: BASE_CHAIN_ID }))
   }
 
   return (
@@ -89,6 +95,7 @@ export default function () {
                     title={token.name}
                     image={token.image}
                     volume={1}
+                    onClick={() => handleBuy(token)}
                     onUpClick={handleUpClick}
                   />
                 )
@@ -105,23 +112,23 @@ export default function () {
             </h2>
           </div>
         </div>
-          <MemeList>
-            {
-              memes.data && memes.data.map(
-                token => (
-                  <MemeCard
-                    showBuy={true}
-                    number={100}
-                    key={token.id}
-                    title={token.name}
-                    image={token.image}
-                    volume={1}
-                    onUpClick={handleUpClick}
-                  />
-                )
+        <MemeList>
+          {
+            memes.data && memes.data.map(
+              token => (
+                <MemeCard
+                  showBuy={true}
+                  number={100}
+                  key={token.id}
+                  title={token.name}
+                  image={token.image}
+                  volume={1}
+                  onClick={() => handleBuy(token)}
+                />
               )
-            }
-          </MemeList>
+            )
+          }
+        </MemeList>
       </Loader>
 
     </div>

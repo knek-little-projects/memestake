@@ -147,6 +147,12 @@ def tokens(chain_id):
     return jsonify([t.to_dict() for t in Token.query.filter_by(chain_id=chain_id, listed=True)])
 
 
+
+@app.route('/wallet/<addr>/tokens/<int:chain_id>')
+def wallet_tokens(chain_id):
+    return jsonify([t.to_dict() for t in Token.query.filter_by(chain_id=chain_id, listed=True)])
+
+
 if __name__ == '__main__':
     start_scheduler()
     app.run(host="0.0.0.0", port=int(os.getenv('PORT', 8000)), debug=os.getenv('DEBUG', 'True').lower() in ['true', '1', 't'])
