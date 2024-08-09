@@ -81,3 +81,6 @@ export async function publish({ chainId, address }) {
   return await post(`/token/${chainId}/${address}`)
 }
 
+export async function getTokens({ chainId }) {
+  return (await get(`/tokens/${chainId}`)).map(data => new TokenModel(data))
+}

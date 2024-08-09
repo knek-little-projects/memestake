@@ -82,7 +82,7 @@ export function ConnectButton() {
                 &&
                 <img src={walletInfo.icon} />
                 ||
-                <img src={url("eth.png")} />
+                <img src={url("ui/eth.png")} />
               }
               {
                 address
@@ -96,7 +96,7 @@ export function ConnectButton() {
             </>
             ||
             <>
-              <img src={url("eth.png")} />
+              <img src={url("ui/eth.png")} />
               Connect Wallet
             </>
           }

@@ -1,0 +1,60 @@
+@import "../const.scss";
+
+$bottom-nav-button: 60px;
+$bottom-nav-grayscale: 0.25;
+$grayscale: $bottom-nav-grayscale;
+
+.bottom-nav {
+    user-select: none;
+
+    position: fixed;
+    bottom: 0;
+    background: rgba(23, 23, 23, 0.90);
+    width: 100%;
+    box-sizing: border-box;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    justify-content: space-evenly;
+
+    display: flex;
+    flex-direction: row;
+
+    .button {
+        cursor: pointer;
+        height: $bottom-nav-button;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+
+        .image {
+            img {
+                height: calc(28px);
+                filter: grayscale($grayscale);
+            }
+        }
+
+        .text {
+            font-weight: 590;
+            color: #78797e;
+            font-style: normal;
+            font-size: 10px;
+            line-height: 13px;
+            letter-spacing: 0.06px;
+        }
+    }
+
+    .button.is-active {
+        .text {
+            color: #2990ff;
+        }
+    }
+
+    // .button:hover {
+    //     .text {
+    //         color: white;
+    //     }
+    //     img {
+    //         filter: grayscale(0);
+    //     }
+    // }
+}
