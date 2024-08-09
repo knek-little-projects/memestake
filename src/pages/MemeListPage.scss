@@ -1,0 +1,106 @@
+@import "../const.scss";
+
+.select-page-content {
+  h1.select-page-title {
+    padding: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .wallet-buttons {
+    display: flex;
+    flex-flow: row wrap;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 0;
+    padding-bottom: 25px;
+    margin: 0;
+
+    position: fixed;
+    // bottom: $bottom-nav-height;
+  }
+}
+
+.meme-cards {
+  cursor: pointer;
+
+  display: flex;
+  justify-content: space-evenly;
+  // align-items: center;
+  flex-flow: column wrap;
+  align-self: flex-end;
+
+  padding: 12px;
+  column-gap: 8px;
+  row-gap: 14px;
+}
+
+.box>* {
+  flex: 1 1 116px;
+}
+
+.claim-window {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+
+  .claim-content {
+    box-sizing: border-box;
+
+    .meme {
+      text-align: center;
+      font-size: 15px;
+
+      .image {
+        img {
+          width: 80px;
+        }
+      }
+
+      .claim-title {}
+
+      .meme-name {
+        padding: 5px;
+        margin: 0;
+      }
+    }
+
+    .description {
+      padding: 0px 10px;
+      margin-top: 20px;
+      color: #AAA;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    .wallet {
+      img {
+        width: 100vw;
+        margin-bottom: -100px;
+      }
+    }
+
+    .success {
+      text-align: center;
+
+      .button-wrapper {
+        margin-top: 10px;
+        width: 100%;
+
+        button {
+          padding: 8px 12px;
+          margin: 0 14px;
+          width: calc(100% - 28px);
+          min-width: 34px;
+          min-height: 36px;
+          border: 1px solid #5AE536;
+          border-radius: 12px;
+          background-color: transparent;
+        }
+      }
+
+    }
+  }
+}

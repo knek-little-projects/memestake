@@ -1,0 +1,15 @@
+.my-button-wrapper {
+    margin-top: 10px;
+    width: 100%;
+
+    button {
+        padding: 8px 12px;
+        margin: 0 14px;
+        width: calc(100% - 28px);
+        min-width: 34px;
+        min-height: 36px;
+        border: 1px solid #5AE536;
+        border-radius: 12px;
+        background-color: transparent;
+    }
+}
