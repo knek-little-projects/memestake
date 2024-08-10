@@ -10,8 +10,7 @@ export function MemeList({
 }
 
 export function MemeCard({
-  showBuy,
-  showUp,
+  rightButton,
   title,
   volume,
   color,
@@ -19,8 +18,6 @@ export function MemeCard({
   number,
   image,
   onClick,
-  onUpClick,
-  onBuyClick,
   children,
 }) {
   return (
@@ -56,23 +53,9 @@ export function MemeCard({
         </div>
       </div>
       <div className="right">
-
-        {
-          showUp
-          &&
-          <div>
-            <UpButton onClick={onUpClick} />
-          </div>
-        }
-        {
-          showBuy
-          &&
-          <div className="buy-wrapper">
-            <button onClick={onBuyClick}>
-              BUY
-            </button>
-          </div>
-        }
+        <div>
+          {rightButton}
+        </div>
       </div>
     </div>
   )

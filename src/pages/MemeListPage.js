@@ -14,6 +14,7 @@ import getBuyLink from "../utils/getBuyLink"
 
 import "./MemeListPage.scss"
 import url from "../url"
+import UpButton from "../components/UpButton"
 
 export default function () {
 
@@ -62,13 +63,32 @@ export default function () {
               memes.data && memes.data.map(
                 token => (
                   <MemeCard
-                    showUp={true}
                     number={parseInt(Math.random() * 1000)}
                     key={token.id}
                     title={token.name}
                     image={token.image}
                     volume={1}
-                    onUpClick={handleUpClick}
+                    rightButton={
+                      <UpButton onClick={handleUpClick} />
+                    }
+                  />
+                )
+              )
+            }
+            {
+              memes.data && memes.data.map(
+                token => (
+                  <MemeCard
+                    number={parseInt(Math.random() * 1000)}
+                    key={token.id}
+                    title={token.name}
+                    image={token.image}
+                    volume={1}
+                    rightButton={
+                      <button>
+                        STAKE
+                      </button>
+                    }
                   />
                 )
               )
@@ -89,14 +109,15 @@ export default function () {
               memes.data && memes.data.map(
                 token => (
                   <MemeCard
-                    showBuy={true}
                     number={100}
                     key={token.id}
                     title={token.name}
                     image={token.image}
                     volume={1}
                     onClick={() => handleBuy(token)}
-                    onUpClick={handleUpClick}
+                    rightButton={
+                      <button>BUY</button>
+                    }
                   />
                 )
               )
@@ -117,13 +138,15 @@ export default function () {
             memes.data && memes.data.map(
               token => (
                 <MemeCard
-                  showBuy={true}
                   number={100}
                   key={token.id}
                   title={token.name}
                   image={token.image}
                   volume={1}
                   onClick={() => handleBuy(token)}
+                  rightButton={
+                    <button>BUY</button>
+                  }
                 />
               )
             )

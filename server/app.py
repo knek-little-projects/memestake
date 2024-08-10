@@ -148,8 +148,10 @@ def tokens(chain_id):
 
 
 
-@app.route('/wallet/<addr>/tokens/<int:chain_id>')
-def wallet_tokens(chain_id):
+@app.route('/wallet/<wallet_address>/tokens/<int:chain_id>')
+def wallet_tokens(wallet_address, chain_id):
+    wallet = Wallet.query.get(wallet_address)
+    
     return jsonify([t.to_dict() for t in Token.query.filter_by(chain_id=chain_id, listed=True)])
 
 
