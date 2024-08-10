@@ -17,8 +17,21 @@ import url from "../url"
 import UpButton from "../components/UpButton"
 
 export default function () {
-
-  const memes = useAsyncRequest(() => api.getTokens({ chainId: BASE_CHAIN_ID }))
+  const { isConnected } = useAccount()
+  const tokens = useAsyncRequest(() => api.getTokens({ chainId: BASE_CHAIN_ID }))
+  const userTokens = useAsyncRequest(async () => {
+    const stakedTokens = []
+    const unstakedTokensWithBalance = []
+    if (tokens.data) {
+      for (const t of tokens.data) {
+        // if token.staking.balanceOf(user)
+        stakedTokens.push(t)
+        // else if token.balanceOf(user)
+        unstakedTokensWithBalance.push(t)
+      }
+    }
+    return { stakedTokens, unstakedTokensWithBalance }
+  }, [tokens.data])
 
   function handleUpClick(e) {
     const rect = e.target.getBoundingClientRect()
@@ -48,7 +61,7 @@ export default function () {
 
   return (
     <div>
-      <Loader {...memes}>
+      <Loader {...tokens}>
         <div className="select-page-content">
           <div className="your-memes">
             <h1>
@@ -58,42 +71,49 @@ export default function () {
               <ConnectButton />
             </div>
           </div>
-          <MemeList>
-            {
-              memes.data && memes.data.map(
-                token => (
-                  <MemeCard
-                    number={parseInt(Math.random() * 1000)}
-                    key={token.id}
-                    title={token.name}
-                    image={token.image}
-                    volume={1}
-                    rightButton={
-                      <UpButton onClick={handleUpClick} />
-                    }
-                  />
-                )
-              )
-            }
-            {
-              memes.data && memes.data.map(
-                token => (
-                  <MemeCard
-                    number={parseInt(Math.random() * 1000)}
-                    key={token.id}
-                    title={token.name}
-                    image={token.image}
-                    volume={1}
-                    rightButton={
-                      <button>
-                        STAKE
-                      </button>
-                    }
-                  />
-                )
-              )
-            }
-          </MemeList>
+          {
+            isConnected
+            &&
+            <Loader {...userTokens}>
+              <MemeList>
+                {
+                  userTokens.data?.stakedTokens?.map(
+                    token => (
+                      <MemeCard
+                        number={parseInt(Math.random() * 1000)}
+                        key={token.id}
+                        title={token.name}
+                        image={token.image}
+                        volume={1}
+                        rightButton={
+                          <UpButton onClick={handleUpClick} />
+                        }
+                      />
+                    )
+                  )
+                }
+                {
+                  userTokens.data?.unstakedTokensWithBalance?.map(
+                    token => (
+                      <MemeCard
+                        number={parseInt(Math.random() * 1000)}
+                        key={token.id}
+                        title={token.name}
+                        image={token.image}
+                        volume={1}
+                        rightButton={
+                          <button>
+                            STAKE
+                          </button>
+                        }
+                      />
+                    )
+                  )
+                }
+              </MemeList>
+            </Loader>
+
+          }
           <div className="top-ten">
             <h1>
               <img src={url("ui/leaderboard.png")} style={{ padding: '10px' }} />
@@ -106,7 +126,7 @@ export default function () {
           </div>
           <MemeList>
             {
-              memes.data && memes.data.map(
+              tokens.data?.slice(0, 10).map(
                 token => (
                   <MemeCard
                     number={100}
@@ -123,19 +143,23 @@ export default function () {
               )
             }
           </MemeList>
-          <div className="top-ten">
-            <h1>
-              &#9733;
-              TOP 100
-              &#9733;
-            </h1>
-            <h2>
-            </h2>
-          </div>
+          {
+            tokens.data?.length > 10
+            &&
+            <div className="top-ten">
+              <h1>
+                &#9733;
+                TOP 100
+                &#9733;
+              </h1>
+              <h2>
+              </h2>
+            </div>
+          }
         </div>
         <MemeList>
           {
-            memes.data && memes.data.map(
+            tokens.data?.slice(10).map(
               token => (
                 <MemeCard
                   number={100}
