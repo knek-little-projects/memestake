@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useAccount } from "wagmi"
-
+import { getBalance } from '@wagmi/core'
+import { config } from '../wallet/connect'
 import { ConnectButton } from "../components/ConnectButton"
 import useAsyncRequest from "../hooks/useAsyncRequest"
 import Loader from "../components/Loader"
@@ -11,13 +12,12 @@ import { floatReward } from '../components/Reward'
 import { extractLeftTop } from "../utils/extractLeftTop"
 import openLink from "../utils/openLink"
 import getBuyLink from "../utils/getBuyLink"
-
 import "./MemeListPage.scss"
 import url from "../url"
 import UpButton from "../components/UpButton"
 
 export default function () {
-  const { isConnected } = useAccount()
+  const { isConnected, address: walletAddress } = useAccount()
   const tokens = useAsyncRequest(() => api.getTokens({ chainId: BASE_CHAIN_ID }))
   const userTokens = useAsyncRequest(async () => {
     const stakedTokens = []
@@ -25,9 +25,21 @@ export default function () {
     if (tokens.data) {
       for (const t of tokens.data) {
         // if token.staking.balanceOf(user)
-        stakedTokens.push(t)
-        // else if token.balanceOf(user)
-        unstakedTokensWithBalance.push(t)
+        // stakedTokens.push(t)
+
+        const {
+          decimals,
+          symbol,
+          value,
+        } = await getBalance(config, {
+          address: walletAddress,
+          token: t.address,
+          chainId: t.chainId,
+        })
+
+        if (value > 0n) {
+          unstakedTokensWithBalance.push(t)
+        }
       }
     }
     return { stakedTokens, unstakedTokensWithBalance }
@@ -82,7 +94,7 @@ export default function () {
                       <MemeCard
                         number={parseInt(Math.random() * 1000)}
                         key={token.id}
-                        title={token.name}
+                        title={token.symbol}
                         image={token.image}
                         volume={1}
                         rightButton={
@@ -98,7 +110,7 @@ export default function () {
                       <MemeCard
                         number={parseInt(Math.random() * 1000)}
                         key={token.id}
-                        title={token.name}
+                        title={token.symbol}
                         image={token.image}
                         volume={1}
                         rightButton={
@@ -131,7 +143,7 @@ export default function () {
                   <MemeCard
                     number={100}
                     key={token.id}
-                    title={token.name}
+                    title={token.symbol}
                     image={token.image}
                     volume={1}
                     onClick={() => handleBuy(token)}
@@ -164,7 +176,7 @@ export default function () {
                 <MemeCard
                   number={100}
                   key={token.id}
-                  title={token.name}
+                  title={token.symbol}
                   image={token.image}
                   volume={1}
                   onClick={() => handleBuy(token)}
