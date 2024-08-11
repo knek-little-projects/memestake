@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 
 import telebot
 import atexit
+import web3
 
 import json
 import time
@@ -19,6 +20,9 @@ import os
 from models import *
 from utils.token.image import get_token_image
 from utils.token.details import get_token_details
+
+from utils.locker import Locker
+import deploys
 
 load_dotenv()
 bot = telebot.TeleBot(os.getenv('TELEBOT'))
@@ -42,23 +46,44 @@ app.config['DISABLE_SCHEDULER'] = os.getenv('DISABLE_SCHEDULER', 'False').lower(
 db.init_app(app)
 migrate = Migrate(app, db)
 
+# def update_tvls():
+#     with app.app_context():
+#         pass
 
-def update_tvls():
-    with app.app_context():
-        pass
-
-
-BASE_START_BLOCK = 18286799
 
 def watch_events():
     with app.app_context():
-        pass
+        print("start watch_events()")
+        locker = Locker(deploys.LOCKER_ADDRESS)
+
+        config = Settings.query.get("locker_start_block")
+
+        if not config:
+            config = Settings(id="locker_start_block", value=str(deploys.BASE_START_BLOCK))
+            db.session.add(config)
+
+        start_block = int(config.value)
+        end_block = locker.get_web3().eth.block_number
+        print(f"start_block={start_block}, end_block={end_block})")
+        assert isinstance(end_block, int), "end_block is not int"
+        config.value = str(end_block)
+
+        # TODO: set to zero for a new epoch
+        # TODO: remove accumulated from old epochs
+
+        for e in locker.fetch_add_points(start_block, end_block):
+            user = e.args.user
+            token = Token.query.get(Token.getId(deploys.BASE_CHAIN_ID, e.args.token))
+            if token:
+                token.points = str(int(token.points) + int(e.args.amount))
+
+        db.session.commit()
 
 
 def start_scheduler():
     scheduler = BackgroundScheduler()
     # scheduler.add_job(func=update_tvls, trigger="interval", seconds=1) # minutes=1)
-    scheduler.add_job(func=watch_events, trigger="interval", seconds=10)
+    scheduler.add_job(func=watch_events, trigger="interval", max_instances=1, seconds=10)
     scheduler.start()
     # Shut down the scheduler when exiting the app
     atexit.register(lambda: scheduler.shutdown())

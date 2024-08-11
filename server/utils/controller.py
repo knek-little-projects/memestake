@@ -13,4 +13,6 @@ class Controller:
     def fetch_new_memes(self, start_block):
         return fetch_base_events(self.addr, self.abi, "RegisterMeme", start_block)
 
-print(Controller("0xDDC2D0bf8Ab0416e9c019885dd23611c06E12b52").fetch_new_memes(18286799))
+
+if __name__ == "__main__":
+    print(Controller("0xDDC2D0bf8Ab0416e9c019885dd23611c06E12b52").fetch_new_memes(18286799))

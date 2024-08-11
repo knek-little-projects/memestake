@@ -68,6 +68,11 @@ class Token(db.Model):
         }
 
 
+class Settings(db.Model):
+    id = db.Column(db.String, primary_key=True)
+    value = db.Column(db.String, nullable=True)
+
+
 # class Locking(db.Model):
 #     __tablename__ = 'lockings'
 

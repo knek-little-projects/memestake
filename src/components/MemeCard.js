@@ -1,6 +1,5 @@
 import "./MemeCard.scss"
-import UpButton from "./UpButton"
-import Button from "./Button"
+import shortifyBalance from "../utils/shortifyBalance"
 
 export function MemeList({
   children
@@ -46,7 +45,7 @@ export function MemeCard({
             POINTS
           </div>
           <div className="value">
-            {totalPoints}
+            {shortifyBalance(totalPoints, 18)}
           </div>
         </div>
       </div>

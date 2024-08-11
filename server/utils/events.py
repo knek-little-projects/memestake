@@ -52,4 +52,3 @@ def fetch_base_events(
         current_block = web3.eth.block_number
 
     return fetch_events_in_chunks(event, start_block, current_block, chunk_size)
-
