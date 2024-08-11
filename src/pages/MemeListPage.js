@@ -22,26 +22,27 @@ export default function () {
   const userTokens = useAsyncRequest(async () => {
     const stakedTokens = []
     const unstakedTokensWithBalance = []
-    if (tokens.data) {
-      for (const t of tokens.data) {
-        // if token.staking.balanceOf(user)
-        // stakedTokens.push(t)
 
-        const {
-          decimals,
-          symbol,
-          value,
-        } = await getBalance(config, {
-          address: walletAddress,
-          token: t.address,
-          chainId: t.chainId,
-        })
+    for (let index = 0; index < tokens.data?.length; index++) {
+      const token = tokens.data[index]
+      // if token.staking.balanceOf(user)
+      // stakedTokens.push(t)
 
-        if (value > 0n) {
-          unstakedTokensWithBalance.push(t)
-        }
+      const {
+        decimals,
+        symbol,
+        value,
+      } = await getBalance(config, {
+        address: walletAddress,
+        token: token.address,
+        chainId: token.chainId,
+      })
+
+      if (value > 0n) {
+        unstakedTokensWithBalance.push({ index, token })
       }
     }
+
     return { stakedTokens, unstakedTokensWithBalance }
   }, [tokens.data])
 
@@ -88,7 +89,7 @@ export default function () {
             &&
             <Loader {...userTokens}>
               <MemeList>
-                {
+                {/* {
                   userTokens.data?.stakedTokens?.map(
                     token => (
                       <MemeCard
@@ -103,12 +104,12 @@ export default function () {
                       />
                     )
                   )
-                }
+                } */}
                 {
                   userTokens.data?.unstakedTokensWithBalance?.map(
-                    token => (
+                    ({ token, index }) => (
                       <MemeCard
-                        number={parseInt(Math.random() * 1000)}
+                        number={index + 1}
                         key={token.id}
                         title={token.symbol}
                         image={token.image}
@@ -143,9 +144,9 @@ export default function () {
           <MemeList>
             {
               tokens.data?.slice(0, 10).map(
-                token => (
+                (token, index) => (
                   <MemeCard
-                    number={100}
+                    number={index + 1}
                     key={token.id}
                     title={token.symbol}
                     image={token.image}
