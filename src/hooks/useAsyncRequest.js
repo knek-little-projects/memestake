@@ -31,5 +31,11 @@ export default function useAsyncRequest(asyncFunction, dependencies = []) {
     execute()
   }, [execute])
 
-  return { loading, data, error, refetch: execute }
+  return { 
+    isLoaded: !error && !loading,
+    loading, 
+    data, 
+    error, 
+    refetch: execute 
+  }
 }

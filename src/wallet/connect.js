@@ -58,6 +58,7 @@ export function Web3ModalProvider({ children }) {
   )
 }
 
-export const abi = {
-
+export const addresses = {
+  memeStaking: "0x4f61479d7b5c65Cb9aa7E8699e5F8A3BCF151f6d",
+  pointsLocker: "0x90339bD2eECcf6eaFC14940B1F993edB3de78573",
 }
