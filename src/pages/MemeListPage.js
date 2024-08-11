@@ -112,7 +112,7 @@ export default function () {
                         key={token.id}
                         title={token.symbol}
                         image={token.image}
-                        volume={1}
+                        totalPoints={token.points}
                         rightButton={
                           <button>
                             STAKE

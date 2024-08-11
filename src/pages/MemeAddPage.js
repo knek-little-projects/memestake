@@ -14,6 +14,8 @@ import isValidAddress from "../utils/isValidAddress"
 import { ConnectButton } from "../components/ConnectButton"
 import useBalance from "../hooks/useBalance"
 import { BASE_CHAIN_ID, BASE_MEMESTAKE_TOKEN_ADDRESS } from "../wallet/connect"
+import shortifyNumber from "../utils/shortifyNumber"
+import shortifyBalance from "../utils/shortifyBalance"
 
 function TokenDetails({
   chain,
@@ -51,8 +53,7 @@ function StakeAndPublishForm({
   })
   const { balance, decimals } = balanceLoader
 
-  // const minAmount = ((10n ** 18n) * 100n)
-  const minAmount = 0n
+  const fee = 10n ** 18n;  // TODO: fetch from contract
 
   async function handlePublish() {
     await api.publish(details)
@@ -63,38 +64,46 @@ function StakeAndPublishForm({
     <div>
       <TokenDetails {...details} />
       <Loader {...balanceLoader}>
-        <div>You have {"" + balance} $MEMESTAKE</div>
         {
-          balance < minAmount
+          balanceLoader.isLoaded
           &&
-          <div>
-            <div>
-              You need to buy extra {"" + (minAmount - balance)} $MEMESTAKEs to publish {details.symbol}
-            </div>
-            <div>
-              <Button>
-                BUY
-              </Button>
-            </div>
-          </div>
-          ||
-          (
-            isPublished
-            &&
-            <div>
-              Published!
-            </div>
-            ||
-            <div>
-              <Button>
-                Step 1. Stake {"" + minAmount} $MEMESTAKEs
-              </Button>
-              <Button onClick={handlePublish}>
-                Step 2. PUBLISH {details.symbol}
-              </Button>
-            </div>
-          )
-
+          <>
+            <div>You have {shortifyBalance(balance, 18)} $MEMESTAKE</div>
+            {
+              balance < fee
+              &&
+              <div>
+                <div>
+                  You need to buy extra {shortifyBalance(fee - balance, 18)} $MEMESTAKEs to publish {details.symbol}
+                </div>
+                <div>
+                  <Button>
+                    BUY
+                  </Button>
+                </div>
+              </div>
+              ||
+              (
+                isPublished
+                &&
+                <div>
+                  Published!
+                </div>
+                ||
+                <div>
+                  <Button>
+                    1. Approve $MEMESTAKEs
+                  </Button>
+                  <Button>
+                    2. Pay {shortifyBalance(fee, 18)} $MEMESTAKEs
+                  </Button>
+                  <Button onClick={handlePublish}>
+                    3. PUBLISH {details.symbol}
+                  </Button>
+                </div>
+              )
+            }
+          </>
         }
       </Loader>
     </div>
@@ -129,7 +138,7 @@ export function MemeCheckForm() {
 
     try {
       return await api.getTokenDetails(BASE_CHAIN_ID, checkTokenAddress)
-    } catch(e) {
+    } catch (e) {
       console.error(e)
       return null
     }

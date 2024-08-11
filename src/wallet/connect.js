@@ -11,7 +11,7 @@ const chains = [
 ]
 
 export const BASE_CHAIN_ID = 8453
-export const BASE_MEMESTAKE_TOKEN_ADDRESS = "0x4ed4e862860bed51a9570b96d89af5e1b0efefed"
+export const BASE_MEMESTAKE_TOKEN_ADDRESS = "0x892d8E4E3e9481455ad355A6BbF5e812A6f0C7e1"
 
 export function getChainById(id) {
   return [...chains].find(x => x.id === id)

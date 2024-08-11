@@ -41,13 +41,14 @@ export default function useBalance({ tokenAddress, walletAddress, chainId }) {
 
   const isError = balance?.isError || decimals?.isError
   const isLoading = !isError && (balance?.isLoading || decimals?.isLoading)
-  const isLoaded = !!(!isLoading && !isError && balance?.data && decimals?.data)
+  const isLoaded = !!(!isLoading && !isError && (balance?.data !== undefined) && (decimals?.data !== undefined))
 
+  const loading = !isError && (isLoading || !isLoaded)
   const bnBalance = balance?.data
   const bnDecimals = decimals?.data
 
   return {
-    loading: isLoading,
+    loading,
     error: isError,
     isLoaded,
     isLoading,

@@ -10,6 +10,7 @@ export const TokenModel = strict(class {
     decimals,
     image,
     listed,
+    points,
   }) {
     this.id = nonnull(id)
     this.chainId = nonnull(chainId)
@@ -19,6 +20,7 @@ export const TokenModel = strict(class {
     this.decimals = nonnull(decimals)
     this.image = nonnull(image)
     this.listed = nonnull(listed)
+    this.points = nonnull(points)
   }
 
   static check(data) {
@@ -35,6 +37,7 @@ export const TokenModel = strict(class {
         decimals: this.decimals,
         image: this.image,
         listed: this.listed,
+        points: this.points,
     }
   }
 })
