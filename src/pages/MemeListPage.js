@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useAccount } from "wagmi"
 import { getBalance } from '@wagmi/core'
-import { config } from '../wallet/connect'
+import { addresses, config } from '../wallet/connect'
 import { ConnectButton } from "../components/ConnectButton"
 import useAsyncRequest from "../hooks/useAsyncRequest"
 import Loader from "../components/Loader"
@@ -14,6 +14,11 @@ import "./MemeListPage.scss"
 import url from "../url"
 import UpButton from "../components/UpButton"
 import DetectCard from "../components/DetectCard"
+import { writeContract, readContract } from '@wagmi/core'
+
+import PointsController from "../abi/PointsController.json"
+import MemeStaking from "../abi/MemeStaking.json"
+import IERC20 from "../abi/IERC20.json"
 
 export default function () {
   const { isConnected, address: walletAddress } = useAccount()
@@ -24,8 +29,23 @@ export default function () {
 
     for (let index = 0; index < tokens.data?.length; index++) {
       const token = tokens.data[index]
-      // if token.staking.balanceOf(user)
-      // stakedTokens.push(t)
+
+      const result = await readContract(config, {
+        abi: MemeStaking.abi,
+        address: addresses.memeStaking,
+        chainId: token.chainId,
+        functionName: "stakes",
+        args: [
+          walletAddress,
+          token.address,
+        ]
+      })
+
+      const staked = result[0]
+      if (staked > 0n) {
+        stakedTokens.push({ index, token })
+        continue
+      }
 
       const {
         decimals,
@@ -39,6 +59,7 @@ export default function () {
 
       if (value > 0n) {
         unstakedTokensWithBalance.push({ index, token })
+        continue
       }
     }
 
@@ -84,22 +105,17 @@ export default function () {
             &&
             <Loader {...userTokens}>
               <MemeList>
-                {/* {
+                {
                   userTokens.data?.stakedTokens?.map(
-                    token => (
-                      <MemeCard
-                        number={parseInt(Math.random() * 1000)}
+                    ({ token, index }) => (
+                      <DetectCard
+                        number={index + 1}
                         key={token.id}
-                        title={token.symbol}
-                        image={token.image}
-                        volume={1}
-                        rightButton={
-                          <UpButton onClick={handleUpClick} />
-                        }
+                        token={token}
                       />
                     )
                   )
-                } */}
+                }
                 {
                   userTokens.data?.unstakedTokensWithBalance?.map(
                     ({ token, index }) => (

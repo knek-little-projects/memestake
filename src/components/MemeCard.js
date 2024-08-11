@@ -20,7 +20,7 @@ export function MemeCard({
   children,
 }) {
   return (
-    <div className="meme-card" onClick={onClick}>
+    <div className="meme-card" onClick={onClick} style={{ maxWidth: (window.innerWidth - 35) + "px"}}>
       <div className="left">
         <div className="number">
           #{number}
@@ -41,7 +41,6 @@ export function MemeCard({
         </div>
       </div>
       <div className="center">
-
         <div className="volume">
           <div className="title">
             POINTS
