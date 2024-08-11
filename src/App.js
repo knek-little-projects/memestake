@@ -7,6 +7,7 @@ import MemeListPage from './pages/MemeListPage'
 import NotFoundPage from './pages/NotFoundPage'
 import MemeAddPage from './pages/MemeAddPage'
 import Layout from './Layout'
+import ProfilePage from './pages/ProfilePage'
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
           <Route path="/" element={<Navigate to="/memes/" />} />
           <Route path="/memes" element={<Navigate to="/memes/" />} />
           <Route path="/memes/" element={<MemeListPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/add" element={<Navigate to="/add/" />} />
           <Route path="/add/" element={<MemeAddPage />} />
           <Route path="/add/:addr" element={<MemeAddPage />} />

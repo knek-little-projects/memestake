@@ -10,6 +10,7 @@ export function MemeList({
 export function MemeCard({
   rightButton,
   title,
+  stakedAmount,
   totalPoints,
   color,
   color2,
@@ -19,13 +20,19 @@ export function MemeCard({
   children,
 }) {
   return (
-    <div className="meme-card" onClick={onClick} style={{ maxWidth: (window.innerWidth - 35) + "px"}}>
+    <div className="meme-card" onClick={onClick} style={{ maxWidth: (window.innerWidth - 35) + "px" }}>
       <div className="left">
-        <div className="number">
-          #{number}
-        </div>
-        <div className="sep">
-        </div>
+        {
+          number !== undefined
+          &&
+          <>
+            <div className="number">
+              #{number}
+            </div>
+            <div className="sep">
+            </div>
+          </>
+        }
 
         <div className="meme-card-ava">
           <div className="top" style={{ backgroundColor: color }}>
@@ -40,14 +47,32 @@ export function MemeCard({
         </div>
       </div>
       <div className="center">
-        <div className="volume">
-          <div className="title">
-            POINTS
+        {
+          totalPoints !== undefined
+          &&
+          <div className="volume">
+            <div className="title">
+              POINTS
+            </div>
+            <div className="value">
+              {shortifyBalance(totalPoints, 18)}
+            </div>
           </div>
-          <div className="value">
-            {shortifyBalance(totalPoints, 18)}
+        }
+        {
+          stakedAmount !== undefined
+          &&
+          stakedAmount !== null
+          &&
+          <div className="volume">
+            <div className="title">
+              STAKED
+            </div>
+            <div className="value">
+              {shortifyBalance(stakedAmount, 18)}
+            </div>
           </div>
-        </div>
+        }
       </div>
       <div className="right">
         <div>

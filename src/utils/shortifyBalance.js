@@ -3,8 +3,8 @@
 import { nonnull } from "../data/strict";
 
 export default function (number, decimals) {
-  nonnull(number)
-  nonnull(decimals)
+  nonnull(number, "shortifyBalance number is null")
+  nonnull(decimals, "shortifyBalance decimals is null")
   
   const one = 10n ** BigInt(decimals)
   number = parseFloat(parseFloat(BigInt(number) / one))

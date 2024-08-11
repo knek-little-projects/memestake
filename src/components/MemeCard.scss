@@ -55,6 +55,11 @@
     border-left: 1px solid rgba(100,100,100,0.5);
   }
 
+  .right .my-button-wrapper button {
+    height: 80px;
+    font-size: 14px;
+  }
+
   .meme-card {
     user-select: none;
     display: flex;
