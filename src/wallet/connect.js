@@ -57,3 +57,7 @@ export function Web3ModalProvider({ children }) {
     </WagmiProvider>
   )
 }
+
+export const abi = {
+
+}

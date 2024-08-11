@@ -10,11 +10,10 @@ import { BASE_CHAIN_ID } from "../wallet/connect"
 import { MemeList, MemeCard } from "../components/MemeCard"
 import { floatReward } from '../components/Reward'
 import { extractLeftTop } from "../utils/extractLeftTop"
-import openLink from "../utils/openLink"
-import getBuyLink from "../utils/getBuyLink"
 import "./MemeListPage.scss"
 import url from "../url"
 import UpButton from "../components/UpButton"
+import DetectCard from "../components/DetectCard"
 
 export default function () {
   const { isConnected, address: walletAddress } = useAccount()
@@ -68,10 +67,6 @@ export default function () {
     })
   }
 
-  function handleBuy(token) {
-    openLink(getBuyLink({ sellTokenAddress: "ETH", buyTokenAddress: token.address, chainId: BASE_CHAIN_ID }))
-  }
-
   return (
     <div>
       <Loader {...tokens}>
@@ -108,17 +103,10 @@ export default function () {
                 {
                   userTokens.data?.unstakedTokensWithBalance?.map(
                     ({ token, index }) => (
-                      <MemeCard
+                      <DetectCard
                         number={index + 1}
                         key={token.id}
-                        title={token.symbol}
-                        image={token.image}
-                        totalPoints={token.points}
-                        rightButton={
-                          <button>
-                            STAKE
-                          </button>
-                        }
+                        token={token}
                       />
                     )
                   )
@@ -145,16 +133,10 @@ export default function () {
             {
               tokens.data?.slice(0, 10).map(
                 (token, index) => (
-                  <MemeCard
+                  <DetectCard
                     number={index + 1}
                     key={token.id}
-                    title={token.symbol}
-                    image={token.image}
-                    volume={1}
-                    onClick={() => handleBuy(token)}
-                    rightButton={
-                      <button>BUY</button>
-                    }
+                    token={token}
                   />
                 )
               )
@@ -177,17 +159,11 @@ export default function () {
         <MemeList>
           {
             tokens.data?.slice(10).map(
-              token => (
-                <MemeCard
-                  number={100}
+              (token, index) => (
+                <DetectCard
+                  number={index + 1}
                   key={token.id}
-                  title={token.symbol}
-                  image={token.image}
-                  volume={1}
-                  onClick={() => handleBuy(token)}
-                  rightButton={
-                    <button>BUY</button>
-                  }
+                  token={token}
                 />
               )
             )
