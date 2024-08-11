@@ -11,6 +11,7 @@ export function MemeCard({
   rightButton,
   title,
   stakedAmount,
+  balanceAmount,
   totalPoints,
   color,
   color2,
@@ -70,6 +71,20 @@ export function MemeCard({
             </div>
             <div className="value">
               {shortifyBalance(stakedAmount, 18)}
+            </div>
+          </div>
+        }
+        {
+          balanceAmount !== undefined
+          &&
+          balanceAmount !== null
+          &&
+          <div className="volume">
+            <div className="title">
+              BALANCE
+            </div>
+            <div className="value">
+              {shortifyBalance(balanceAmount, 18)}
             </div>
           </div>
         }

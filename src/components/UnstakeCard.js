@@ -26,6 +26,18 @@ export default function ({
   const [stakeFlow, setStakeFlow] = useState(false)
   const [hash, setHash] = useState(undefined)
 
+  const approveReceipt = useWaitForTransactionReceipt({ hash })
+  useEffect(() => {
+    if (!hash) {
+      return
+    }
+    if (hash) {
+      setHash(undefined)
+    }
+  }, [
+    approveReceipt.isSuccess
+  ])
+
   const receipt = null //useWaitForTransactionReceipt({ hash })
   console.debug("redraw")
   const w = useWriteContract(config)
@@ -70,7 +82,9 @@ export default function ({
         addresses.memeStaking,
       ]
     })
-  })
+  }, [
+    approveReceipt.isSuccess
+  ])
 
   const stakeLoader = useAsyncRequest(async () => {
     const result = await readContract(config, {
@@ -122,10 +136,24 @@ export default function ({
     setStakeFlow(true)
   }
 
+  function handleUnstake() {
+    writeContract(config, {
+      abi: MemeStaking.abi,
+      address: addresses.memeStaking,
+      functionName: "unstake",
+      chainId: token.chainId,
+      args: [
+        token.address,
+        staked,
+      ]
+    })
+  }
+
   useEffect(() => {
     if (stakeFlow && allowance !== undefined && balance !== undefined) {
-      if (allowance < balance) {
-        writeContract(config, {
+      setStakeFlow(false)
+      if (allowance == 0n) {
+        w.writeContractAsync({
           abi: IERC20.abi,
           address: token.address,
           chainId: token.chainId,
@@ -135,6 +163,8 @@ export default function ({
             balance,
           ]
         })
+          .then(hash => setHash(hash))
+          .catch(console.error)
       } else {
         writeContract(config, {
           abi: MemeStaking.abi,
@@ -143,7 +173,7 @@ export default function ({
           chainId: token.chainId,
           args: [
             token.address,
-            balance,
+            allowance < balance ? allowance : balance,
           ]
         }).then(() => setStakeFlow(false))
       }
@@ -157,14 +187,14 @@ export default function ({
       if (staked > 0n) {
 
         return (
-          <Button>
+          <Button onClick={handleUnstake}>
             UNSTAKE
           </Button>
         )
 
       } else {
         return (
-          <Button>
+          <Button onClick={handleStake}>
             STAKE
           </Button>
         )
@@ -195,6 +225,7 @@ export default function ({
       title={token.symbol}
       image={token.image}
       stakedAmount={staked}
+      balanceAmount={balance}
       rightButton={getRightButton()}
     />
   )
