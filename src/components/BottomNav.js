@@ -33,11 +33,11 @@ export default function ({
   return (
     <div>
       <div className="bottom-nav" style={style}>
-        <BottomNavButton image="ui/rocket.png" text="MEMES" path="/memes" />
+        <BottomNavButton image="ui/leaderboard.png" text="MEMES" path="/memes" />
         <BottomNavButton image="ui/handshake.png" text="FRIENDS" path="/friends" />
         <BottomNavButton image="ui/stoneface.png" text="STAKE" path="/profile" />
         <BottomNavButton image="ui/exlmark.png" text="MISSIONS" path="/missions" />
-        <BottomNavButton image="ui/leaderboard.png" text="AIRDROP" path="/airdrop" />
+        <BottomNavButton image="ui/rocket.png" text="AIRDROP" path="/airdrop" />
       </div>
     </div>
   )
