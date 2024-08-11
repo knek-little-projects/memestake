@@ -47,7 +47,7 @@ export default function useBalance({ tokenAddress, walletAddress, chainId }) {
   const bnDecimals = decimals?.data
 
   return {
-    loading: isLoaded,
+    loading: isLoading,
     error: isError,
     isLoaded,
     isLoading,

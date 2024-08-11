@@ -48,6 +48,8 @@ def update_tvls():
         pass
 
 
+BASE_START_BLOCK = 18286799
+
 def watch_events():
     with app.app_context():
         pass
@@ -56,7 +58,7 @@ def watch_events():
 def start_scheduler():
     scheduler = BackgroundScheduler()
     # scheduler.add_job(func=update_tvls, trigger="interval", seconds=1) # minutes=1)
-    # scheduler.add_job(func=watch_events, trigger="interval", seconds=10) # minutes=1)
+    scheduler.add_job(func=watch_events, trigger="interval", seconds=10)
     scheduler.start()
     # Shut down the scheduler when exiting the app
     atexit.register(lambda: scheduler.shutdown())
