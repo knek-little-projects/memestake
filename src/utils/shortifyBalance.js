@@ -7,7 +7,8 @@ export default function (number, decimals) {
   nonnull(decimals)
   
   const one = 10n ** BigInt(decimals)
-  number = parseFloat(parseFloat(BigInt(number) / one) + "." + (BigInt(number) % one))
+  number = parseFloat(parseFloat(BigInt(number) / one))
+  // + "." + (BigInt(number) % one))
 
   if (number > 0 && number < 1) {
     return "<1"
