@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import isValidAddress from "../utils/isValidAddress"
 
 const EthAddressInput = ({ value, onChange }) => {
+  value = value || ""
+  
   const handleChange = (e) => {
     const newValue = e.target.value.trim()
     onChange(newValue)
