@@ -110,7 +110,7 @@ export default function ({
         token.address,
       ]
     })
-  }, [ receipt ])
+  }, [receipt])
 
   const balance = balanceLoader.data
   const allowance = allowanceLoader.data
@@ -154,30 +154,26 @@ export default function ({
 
     if (staked > 0n) {
 
-      return (
-        <UpButton
-          onClick={handleUp}
-        >
-          {
-            lockablePoints !== undefined
-            &&
-            
-            (
-              whenReady <= (new Date().getTime() / 1000)
+      const countdown = parseInt(whenReady) - parseInt(new Date().getTime() / 1000)
+
+      if (lockablePoints !== undefined) {
+        if (countdown > 0) {
+          return <button>cooldown {countdown} seconds</button>
+        }
+        return (
+          <UpButton
+            onClick={handleUp}
+          >
+            {
+              lockablePoints !== undefined
               &&
-            <>
-              +{shortifyBalance(lockablePoints, 18)}
-            </>
-            ||
-            <>
-            cooldown {parseInt(whenReady - new Date().getTime() / 1000)} seconds
-            </>
-            )
-
-
-          }
-        </UpButton>
-      )
+              <>
+                +{shortifyBalance(lockablePoints, 18)}
+              </>
+            }
+          </UpButton>
+        )
+      }
     }
 
     if (balance > 0n) {
