@@ -144,7 +144,7 @@ def token(chain_id, addr):
 
 @app.route('/tokens/<int:chain_id>')
 def tokens(chain_id):
-    return jsonify([t.to_dict() for t in Token.query.filter_by(chain_id=chain_id, listed=True)])
+    return jsonify([t.to_dict() for t in Token.query.filter_by(chain_id=chain_id, listed=True).order_by(Token.points)])
 
 
 

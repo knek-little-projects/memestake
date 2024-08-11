@@ -126,16 +126,20 @@ export default function () {
             </Loader>
 
           }
-          <div className="top-ten">
-            <h1>
-              <img src={url("ui/leaderboard.png")} style={{ padding: '10px' }} />
-              TOP TEN
-              <img src={url("ui/leaderboard.png")} style={{ padding: '10px' }} />
-            </h1>
-            <h2>
-              TO RECEIVE AIRDROP
-            </h2>
-          </div>
+          {
+            tokens.data?.length > 0
+            &&
+            <div className="top-ten">
+              <h1>
+                <img src={url("ui/leaderboard.png")} style={{ padding: '10px' }} />
+                TOP TEN
+                <img src={url("ui/leaderboard.png")} style={{ padding: '10px' }} />
+              </h1>
+              <h2>
+                TO RECEIVE AIRDROP
+              </h2>
+            </div>
+          }
           <MemeList>
             {
               tokens.data?.slice(0, 10).map(
@@ -188,8 +192,8 @@ export default function () {
             )
           }
         </MemeList>
-      </Loader>
+      </Loader >
 
-    </div>
+    </div >
   )
 }

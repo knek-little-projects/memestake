@@ -48,6 +48,7 @@ class Token(db.Model):
     image = db.Column(db.String, nullable=False)
     listed = db.Column(db.Boolean, nullable=False, default=False)
     created_at = db.Column(db.BigInteger, nullable=False, default=timestamp)
+    points = db.Column(db.String, nullable=False, default="0")
 
     @classmethod
     def getId(cls, chainId, address):
@@ -63,6 +64,7 @@ class Token(db.Model):
             "decimals": self.decimals,
             "image": self.image,
             "listed": self.listed,
+            "points": self.points,
         }
 
 
